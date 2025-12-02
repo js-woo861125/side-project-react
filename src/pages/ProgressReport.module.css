@@ -1,0 +1,82 @@
+/* src/pages/ProgressReport.module.css */
+
+/* 전체 컨테이너 */
+.container {
+    min-height: 100vh;
+    background-color: #f3f4f6; /* bg-gray-100 */
+    padding: 2rem; /* p-8 */
+}
+
+/* 상단 헤더 (제목 및 뒤로가기) */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem; /* mb-8 */
+}
+
+.title {
+    font-size: 1.875rem; /* text-3xl */
+    font-weight: 700; /* font-bold */
+    color: #1f2937; /* text-gray-800 */
+}
+
+/* 메인 콘텐츠 영역 */
+.mainContent {
+    background-color: #ffffff; /* bg-white */
+    padding: 1.5rem; /* p-6 */
+    border-radius: 0.75rem; /* rounded-xl */
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06); /* shadow-sm */
+}
+
+/* 핵심 지표 카드 목록 (Grid Layout) */
+.metricGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* 반응형 200px 이상 */
+    gap: 1rem; /* gap-4 */
+    margin-bottom: 2rem;
+}
+
+/* 개별 핵심 지표 카드 */
+.metricCard {
+    background-color: #f9fafb; /* bg-gray-50 */
+    padding: 1.25rem; /* p-5 */
+    border-radius: 0.5rem; /* rounded-lg */
+    border-left: 4px solid; /* 색상 구분을 위한 좌측 경계 */
+}
+
+.metricCard.blue { border-left-color: #3b82f6; /* blue-500 */ }
+.metricCard.green { border-left-color: #10b981; /* emerald-500 */ }
+.metricCard.purple { border-left-color: #8b5cf6; /* violet-500 */ }
+
+.metricTitle {
+    font-size: 0.875rem; /* text-sm */
+    font-weight: 500;
+    color: #6b7280; /* text-gray-500 */
+}
+
+.metricValue {
+    font-size: 2.25rem; /* text-4xl */
+    font-weight: 700; /* font-bold */
+    color: #1f2937; /* text-gray-800 */
+    margin-top: 0.25rem;
+}
+
+/* 시각화 및 피드백 영역 */
+.chartSection, .feedbackSection {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+}
+
+.chartSection {
+    text-align: center;
+    height: 300px; /* 차트 영역 높이 확보 */
+}
+
+.feedbackSection {
+    background-color: #f0f9ff; /* bg-blue-50 */
+    border-color: #bfdbfe; /* blue-200 */
+}

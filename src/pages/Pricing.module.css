@@ -1,0 +1,68 @@
+/* src/pages/Pricing.module.css */
+
+/* 전체 페이지 컨테이너 */
+.pricingContainer {
+  min-height: 100vh;
+  background-color: #f9fafb; /* bg-gray-50 */
+  padding-top: 4rem; /* py-16 */
+  padding-bottom: 4rem; /* py-16 */
+  padding-left: 1rem; /* px-4 */
+  padding-right: 1rem; /* px-4 */
+}
+
+/* 헤더 영역 */
+.header {
+  max-width: 56rem; /* max-w-4xl */
+  margin: 0 auto;
+  text-align: center;
+  margin-bottom: 3rem; /* mb-12 */
+}
+
+/* 카드 컨테이너 (최대 너비 및 중앙 정렬) */
+.cardWrapper {
+  max-width: 48rem; /* max-w-3xl */
+  margin: 0 auto;
+}
+
+/* 메인 요금 카드 스타일 */
+.pricingCard {
+  background-color: #ffffff; /* bg-white */
+  padding: 2rem; /* p-8 */
+  border-radius: 0.75rem; /* rounded-xl */
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); /* shadow-2xl */
+  border: 4px solid #3b82f6; /* border-4 border-blue-600 */
+  color: #1f2937; /* text-gray-800 */
+}
+
+/* 기본 구독료 숫자 스타일 */
+.basePriceNumber {
+  font-size: 3.75rem; /* text-6xl */
+  font-weight: 800; /* font-extrabold */
+  margin-top: 0.5rem; /* mt-2 */
+  color: #ef4444; /* text-red-600 */
+}
+
+/* 기본 구독료 단위 텍스트 */
+.basePriceUnit {
+  font-size: 1.5rem; /* text-2xl */
+  font-weight: 400; /* font-normal */
+  color: #6b7280; /* text-gray-500 */
+}
+
+/* 무료 제공 섹션 배경 */
+.freeSection {
+  background-color: #ecfdf5; /* bg-green-50 */
+  border: 1px solid #a7f3d0; /* border-green-200 */
+  padding: 0.75rem; /* p-3 */
+  border-radius: 0.5rem; /* rounded-lg */
+}
+
+/* 종량제 섹션 배경 */
+.billingSection {
+  background-color: #eff6ff; /* bg-blue-50 */
+  border: 1px solid #bfdbfe; /* border-blue-200 */
+  padding: 0.75rem; /* p-3 */
+  border-radius: 0.5rem; /* rounded-lg */
+}
+
+/* 버튼 스타일 (버튼은 Link 컴포넌트에 Tailwind 유지) */

@@ -1,0 +1,39 @@
+/* src/components/StatusCard.module.css */
+
+/* 카드 기본 스타일 */
+.card {
+    background-color: #ffffff; /* bg-white */
+    padding: 1.25rem; /* p-5 */
+    border-radius: 0.5rem; /* rounded-lg */
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06); /* shadow-sm */
+    border-left: 4px solid; /* 색상 구분을 위한 좌측 경계 */
+}
+
+/* 색상 스타일 정의 */
+.blue { border-left-color: #3b82f6; /* blue-500 */ }
+.green { border-left-color: #10b981; /* emerald-500 */ }
+.red { border-left-color: #ef4444; /* red-500 */ }
+.yellow { border-left-color: #f59e0b; /* yellow-500 */ }
+
+/* 제목 스타일 */
+.title {
+    font-size: 0.875rem; /* text-sm */
+    font-weight: 500;
+    color: #6b7280; /* text-gray-500 */
+    margin-bottom: 0.5rem;
+}
+
+/* 수치 스타일 */
+.value {
+    font-size: 2.25rem; /* text-4xl */
+    font-weight: 700; /* font-bold */
+    color: #1f2937; /* text-gray-800 */
+}
+
+/* 단위 스타일 */
+.unit {
+    font-size: 1rem; /* text-base */
+    font-weight: 500;
+    color: #4b5563; /* text-gray-600 */
+    margin-left: 0.25rem;
+}

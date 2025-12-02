@@ -1,0 +1,99 @@
+/* src/pages/InstructorDashboard.module.css */
+
+/* 전체 컨테이너 */
+.container {
+    min-height: 100vh;
+    background-color: #f3f4f6; /* bg-gray-100 */
+    padding: 2rem; /* p-8 */
+}
+
+/* 헤더 영역 */
+.header {
+    margin-bottom: 2rem; /* mb-8 */
+}
+
+.greeting {
+    font-size: 1.875rem; /* text-3xl */
+    font-weight: 700; /* font-bold */
+    color: #1f2937; /* text-gray-800 */
+}
+
+.subtitle {
+    color: #6b7280; /* text-gray-600 */
+    margin-top: 0.25rem;
+}
+
+/* 핵심 지표 카드 영역 (Grid Layout) */
+.metricsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* 반응형 그리드 */
+    gap: 1rem; /* gap-4 */
+    margin-bottom: 2rem;
+}
+
+/* 주요 기능 메뉴 섹션 */
+.mainFeatures {
+    background-color: #ffffff; /* bg-white */
+    padding: 1.5rem; /* p-6 */
+    border-radius: 0.75rem; /* rounded-xl */
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06); /* shadow-lg */
+}
+
+.sectionTitle {
+    font-size: 1.25rem; /* text-xl */
+    font-weight: 600; /* font-semibold */
+    color: #3b82f6; /* text-blue-600 */
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e5e7eb; /* border-gray-200 */
+}
+
+/* 메뉴 링크 그리드 */
+.featureGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2x2 그리드 */
+    gap: 1rem;
+}
+@media (min-width: 768px) {
+    .featureGrid {
+        grid-template-columns: repeat(3, 1fr); /* md: 3x1 그리드 */
+    }
+}
+
+/* 개별 메뉴 링크 스타일 */
+.featureLink {
+    padding: 1rem; /* p-4 */
+    background-color: #f9fafb; /* bg-gray-50 */
+    border-radius: 0.5rem; /* rounded-lg */
+    text-align: center;
+    transition: background-color 0.2s;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    display: block; /* Link 요소를 블록으로 만듦 */
+}
+
+.featureLink:hover {
+    background-color: #e5e7eb; /* hover:bg-gray-200 */
+}
+
+.featureIcon {
+    font-size: 2.25rem; /* text-3xl */
+    margin-bottom: 0.25rem;
+}
+
+.featureText {
+    font-weight: 500;
+    color: #374151; /* text-gray-700 */
+}
+
+/* 메뉴 링크 색상 커스터마이징 (필요에 따라) */
+.schedule { background-color: #f5f3ff; } /* bg-purple-50 */
+.schedule:hover { background-color: #ede9fe; } /* hover:bg-purple-100 */
+
+.members { background-color: #ecfdf5; } /* bg-green-50 */
+.members:hover { background-color: #d1fae5; } /* hover:bg-green-100 */
+
+.progress { background-color: #fffbeb; } /* bg-yellow-50 */
+.progress:hover { background-color: #fef3c7; } /* hover:bg-yellow-100 */
+
+.settings { background-color: #eff6ff; } /* bg-blue-50 */
+.settings:hover { background-color: #dbeafe; } /* hover:bg-blue-100 */

@@ -1,0 +1,75 @@
+/* src/pages/StudentDashboard.module.css */
+
+/* 전체 컨테이너 */
+.dashboardContainer {
+    min-height: 100vh;
+    background-color: #f3f4f6; /* bg-gray-100 */
+    padding: 2rem; /* p-8 */
+}
+
+/* 헤더 영역 */
+.header {
+    margin-bottom: 2rem; /* mb-8 */
+}
+
+.greeting {
+    font-size: 1.875rem; /* text-3xl */
+    font-weight: 700; /* font-bold */
+    color: #1f2937; /* text-gray-800 */
+}
+
+.subText {
+    color: #4b5563; /* text-gray-600 */
+    margin-top: 0.25rem; /* mt-1 */
+}
+
+/* 메뉴 네비게이션 섹션 */
+.navSection {
+    margin-bottom: 2.5rem; /* mb-10 */
+    background-color: #ffffff; /* bg-white */
+    padding: 1.5rem; /* p-6 */
+    border-radius: 0.75rem; /* rounded-xl */
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
+}
+
+.navTitle {
+    font-size: 1.25rem; /* text-xl */
+    font-weight: 600; /* font-semibold */
+    color: #2563eb; /* text-blue-600 */
+    margin-bottom: 1rem; /* mb-4 */
+    border-bottom: 1px solid #e5e7eb; /* border-b */
+    padding-bottom: 0.5rem; /* pb-2 */
+}
+
+/* 메뉴 그리드 */
+.menuGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr)); /* grid-cols-2 */
+    gap: 1rem; /* gap-4 */
+}
+
+/* 큰 화면에서 4열 그리드 (md:grid-cols-4) */
+@media (min-width: 768px) {
+    .menuGrid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+
+/* 오늘의 레슨 섹션 */
+.todaySection {
+    background-color: #ffffff; /* bg-white */
+    padding: 1.5rem; /* p-6 */
+    border-radius: 0.75rem; /* rounded-xl */
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
+}
+
+.todayTitle {
+    font-size: 1.25rem; /* text-xl */
+    font-weight: 600; /* font-semibold */
+    color: #1f2937; /* text-gray-800 */
+    margin-bottom: 1rem; /* mb-4 */
+}
+
+.noLessonText {
+    color: #6b7280; /* text-gray-500 */
+}

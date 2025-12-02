@@ -1,0 +1,59 @@
+/* src/pages/HeroSection.module.css */
+
+/* 전체 페이지 컨테이너 스타일 */
+.heroContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #f9fafb; /* bg-gray-50 */
+  color: #374151; /* text-gray-800 */
+  padding: 1rem; /* p-4 */
+}
+
+/* 메인 콘텐츠 영역 스타일 */
+.mainContent {
+  text-align: center;
+  max-width: 48rem; /* max-w-4xl */
+  padding-top: 5rem; /* pt-20 */
+}
+
+/* 제목 (H1) 스타일 */
+.mainTitle {
+  font-size: 3rem; /* text-5xl (md:text-6xl은 media query로 처리) */
+  font-weight: 800; /* font-extrabold */
+  margin-bottom: 1rem; /* mb-4 */
+  line-height: 1.25; /* leading-tight */
+  color: #111827; /* text-gray-900 */
+}
+
+/* 제목 하이라이트 색상 */
+.highlightText {
+  color: #2563eb; /* text-blue-600 */
+}
+
+/* 부제목 (P) 스타일 */
+.subText {
+  font-size: 1.25rem; /* text-xl (md:text-2xl) */
+  margin-bottom: 2rem; /* mb-8 */
+  color: #4b5563; /* text-gray-600 */
+}
+
+/* 버튼 그룹 컨테이너 */
+.buttonGroup {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem; /* space-y-4 sm:space-x-4 */
+}
+
+/* 작은 화면에서 버튼 그룹 레이아웃 변경 (sm:flex-row) */
+@media (min-width: 640px) {
+  .buttonGroup {
+    flex-direction: row;
+    /* gap: 1rem; 는 그대로 유지 */
+  }
+}
+
+/* 버튼 기본 스타일은 Tailwind 클래스로 Link에 적용 */

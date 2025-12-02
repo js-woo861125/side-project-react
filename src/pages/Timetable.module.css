@@ -1,0 +1,101 @@
+/* src/pages/Timetable.module.css */
+
+/* 전체 컨테이너 */
+.container {
+    min-height: 100vh;
+    background-color: #f3f4f6; /* bg-gray-100 */
+    padding: 2rem; /* p-8 */
+}
+
+/* 상단 헤더 (제목 및 뒤로가기) */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem; /* mb-8 */
+}
+
+.title {
+    font-size: 1.875rem; /* text-3xl */
+    font-weight: 700; /* font-bold */
+    color: #1f2937; /* text-gray-800 */
+}
+
+/* 주간 캘린더 컨테이너 */
+.calendarContainer {
+    background-color: #ffffff; /* bg-white */
+    border-radius: 0.75rem; /* rounded-xl */
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06); /* shadow-sm */
+    overflow: hidden; /* 내부 요소의 border-radius를 위해 */
+}
+
+/* 주간 네비게이션 (날짜 이동) */
+.weekNav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #e5e7eb; /* border-gray-200 */
+    background-color: #f9fafb; /* bg-gray-50 */
+}
+
+.weekRange {
+    font-size: 1.125rem; /* text-lg */
+    font-weight: 600; /* font-semibold */
+    color: #1f2937; /* text-gray-800 */
+}
+
+/* 캘린더 그리드 */
+.calendarGrid {
+    display: grid;
+    grid-template-columns: 50px repeat(7, 1fr); /* 시간 열 + 7일 */
+    border-collapse: collapse;
+}
+
+/* 요일 헤더 */
+.dayHeader {
+    text-align: center;
+    padding: 0.75rem 0; /* py-3 */
+    font-size: 0.875rem; /* text-sm */
+    font-weight: 600; /* font-semibold */
+    color: #4b5563; /* text-gray-600 */
+    border-right: 1px solid #f3f4f6; /* bg-gray-100 경계 */
+}
+
+/* 시간 레이블 (09:00, 10:00 등) */
+.timeLabel {
+    text-align: center;
+    font-size: 0.75rem; /* text-xs */
+    font-weight: 500;
+    color: #9ca3af; /* text-gray-400 */
+    padding-right: 0.5rem;
+    padding-top: 0.75rem;
+    position: sticky;
+    left: 0;
+    background-color: #ffffff;
+    z-index: 10;
+}
+
+/* 시간표 셀 (레슨이 들어갈 공간) */
+.timeSlot {
+    height: 60px; /* 1시간 단위 높이 */
+    border-top: 1px solid #e5e7eb; /* border-gray-200 */
+    border-right: 1px solid #f3f4f6; /* bg-gray-100 경계 */
+    position: relative;
+}
+
+/* 레슨 이벤트 블록 */
+.lessonEvent {
+    position: absolute;
+    width: calc(100% - 4px); /* 셀 경계선과의 여백 */
+    margin: 2px;
+    background-color: #3b82f6; /* bg-blue-500 */
+    color: white;
+    padding: 4px;
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    font-size: 0.75rem; /* text-xs */
+    z-index: 20;
+}
