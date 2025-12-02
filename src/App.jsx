@@ -64,6 +64,7 @@ function App() {
             } 
           />
          
+         
 
           {/* 강사 전체 스케줄  */}
           <Route path="/instructor/schedule" element={<InstructorSchedule />} />
