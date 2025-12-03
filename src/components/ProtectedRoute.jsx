@@ -37,6 +37,8 @@ const ProtectedRoute = ({ allowedRoles, children }) => {
         return <Navigate to={redirectTo} replace />;
     }
 
+
+    
     // 3. 모든 검사를 통과하면 자식 컴포넌트 렌더링
     return children;
 };
