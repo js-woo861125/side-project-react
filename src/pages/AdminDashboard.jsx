@@ -13,6 +13,7 @@ const mockAdminMetrics = [
     { title: '잔여 레슨 부족', value: 12, unit: '건', color: 'red' },
 ];
 
+
 // 더미 데이터: 주요 알림/이슈
 const mockIssues = [
     { id: 1, text: '이번 달 정산 보고서 검토 필요', category: '재무', link: '/admin/report' },
