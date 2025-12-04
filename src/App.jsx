@@ -55,8 +55,7 @@ function App() {
             element={ <ProtectedRoute> <Classes /> </ProtectedRoute> } />
         
           {/* 강사 전체 스케줄  */}
-          <Route path="/instructor/schedule" 
-            element={<InstructorSchedule />} />
+          <Route path="/instructor/schedule" element={ <ProtectedRoute> <InstructorSchedule /> </ProtectedRoute> } />
 
           {/* 학생 대시보드 */}
           <Route path="/student/dashboard" 
@@ -66,40 +65,40 @@ function App() {
           <Route path="/student/lessons" element={ <ProtectedRoute>  <LessonHistory /> </ProtectedRoute> } />
           
           {/* 시간표 */}
-          <Route path="/student/timetable" element={<Timetable />} />
+          <Route path="/student/timetable" element={ <ProtectedRoute> <Timetable /> </ProtectedRoute>} />
           
           {/* 진행 상황*/}
-          <Route path="/student/progress" element={<ProgressReport />} /> 
+          <Route path="/student/progress" element={ <ProtectedRoute> <ProgressReport /> </ProtectedRoute>} /> 
           
           {/* 정보 관리 라우트 컴포넌트 이름 변경 */}
-          <Route path="/student/settings" element={<StudentSettings />} />
+          <Route path="/student/settings" element={ <ProtectedRoute> <StudentSettings /> </ProtectedRoute> } />
 
           {/* 강사 회원 관리*/}
-          <Route path="/instructor/members" element={<InstructorMembers />} />
+          <Route path="/instructor/members" element={ <ProtectedRoute> <InstructorMembers /> </ProtectedRoute> } />
           
           {/* 회원 상세 페이지 (다음에 구현할 수 있도록 경로 예약) */}
-          <Route path="/instructor/members/:id" element={<InstructorMemberDetail />} />
+          <Route path="/instructor/members/:id" element={<ProtectedRoute><InstructorMemberDetail /></ProtectedRoute>} /> 
 
           {/* 강사 노트/평가 */}
-          <Route path="/instructor/progress" element={<InstructorProgress />} />  
+          <Route path="/instructor/progress" element={<ProtectedRoute><InstructorProgress /></ProtectedRoute>} />  
 
           {/* 강사 정보 관리 */}
-          <Route path="/instructor/settings" element={<InstructorSettings />} />
+          <Route path="/instructor/settings" element={<ProtectedRoute><InstructorSettings /></ProtectedRoute>} />
           
           {/* 관리자 대시보드 */}
-          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/dashboard" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />  
 
           {/* 관리자 직원관리 */}
-          <Route path="/admin/instructors" element={<AdminInstructors />} />
+          <Route path="/admin/instructors" element={<ProtectedRoute><AdminInstructors /></ProtectedRoute>} />  
 
           {/* 관리자 전체 회원 관리 */}
-          <Route path="/admin/members" element={<AdminMembers />} />
+          <Route path="/admin/members" element={<ProtectedRoute><AdminMembers /></ProtectedRoute>} /> 
 
           {/* 관리자 매출/정산 보고서 */}
-          <Route path="/admin/report" element={<AdminReport />} /> 
+          <Route path="/admin/report" element={<ProtectedRoute><AdminReport /></ProtectedRoute>} /> 
 
           {/* 관리자 시스템 설정 */}
-          <Route path="/admin/settings" element={<AdminSettings />} /> 
+          <Route path="/admin/settings" element={<ProtectedRoute><AdminSettings /></ProtectedRoute>} /> 
           
           {/* 404 페이지 */}
           <Route path="*" element={<h1>404: 페이지를 찾을 수 없습니다.</h1>} />
