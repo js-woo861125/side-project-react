@@ -20,6 +20,7 @@ import AdminInstructors from './pages/AdminInstructors';
 import AdminMembers from './pages/AdminMembers';
 import AdminReport from './pages/AdminReport';
 import AdminSettings from './pages/AdminSettings';
+import InstructorMemberDetail from './pages/InstructorMemberDetail';
 
 
 
@@ -46,42 +47,23 @@ function App() {
           <Route path="/pricing" element={<Pricing />} />
 
           {/* 강사 대시보드 _ 호된 라우트 - 로그인 필수 */}
-          <Route 
-            path="/instructor/dashboard" 
-            element={
-              <ProtectedRoute>
-                <InstructorDashboard />
-              </ProtectedRoute>
-            } 
-          />
+          <Route path="/instructor/dashboard" 
+            element={ <ProtectedRoute> <InstructorDashboard /> </ProtectedRoute> } />
+
           {/* 클래스 관리 */}
-          <Route 
-            path="/instructor/classes" 
-            element={
-              <ProtectedRoute>
-                <Classes />
-              </ProtectedRoute>
-            } 
-          />
+          <Route path="/instructor/classes" 
+            element={ <ProtectedRoute> <Classes /> </ProtectedRoute> } />
         
-
-        
-
           {/* 강사 전체 스케줄  */}
-          <Route path="/instructor/schedule" element={<InstructorSchedule />} />
+          <Route path="/instructor/schedule" 
+            element={<InstructorSchedule />} />
 
           {/* 학생 대시보드 */}
-          <Route 
-            path="/student/dashboard" 
-            element={
-              <ProtectedRoute>
-                <StudentDashboard />
-              </ProtectedRoute>
-            } 
-          />
+          <Route path="/student/dashboard" 
+            element={ <ProtectedRoute> <StudentDashboard /> </ProtectedRoute> } />
 
           {/* 수업/레슨 내역 */}
-          <Route path="/student/lessons" element={<LessonHistory />} />
+          <Route path="/student/lessons" element={ <ProtectedRoute>  <LessonHistory /> </ProtectedRoute> } />
           
           {/* 시간표 */}
           <Route path="/student/timetable" element={<Timetable />} />
@@ -96,7 +78,7 @@ function App() {
           <Route path="/instructor/members" element={<InstructorMembers />} />
           
           {/* 회원 상세 페이지 (다음에 구현할 수 있도록 경로 예약) */}
-          <Route path="/instructor/members/:memberId" element={<div>회원 상세 페이지</div>} />
+          <Route path="/instructor/members/:id" element={<InstructorMemberDetail />} />
 
           {/* 강사 노트/평가 */}
           <Route path="/instructor/progress" element={<InstructorProgress />} />  
