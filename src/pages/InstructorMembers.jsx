@@ -1,26 +1,38 @@
-// src/pages/InstructorMembers.jsx
-
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from '../styles/InstructorMembers.module.css';
-
-// 더미 데이터: 강사 담당 회원 목록
-const mockMembers = [
-    { id: 101, name: '이민지', lessonsLeft: 3, lastLesson: '2025.11.27', status: '활동중', phone: '010-1234-5678' },
-    { id: 102, name: '김태형', lessonsLeft: 12, lastLesson: '2025.11.25', status: '활동중', phone: '010-9876-5432' },
-    { id: 103, name: '박서준', lessonsLeft: 0, lastLesson: '2025.11.10', status: '휴면', phone: '010-5555-1111' },
-    { id: 104, name: '최아라', lessonsLeft: 7, lastLesson: '2025.11.28', status: '활동중', phone: '010-2222-3333' },
-];
+import api from '../services/api';
 
 const InstructorMembers = () => {
     const navigate = useNavigate();
+    const [members, setMembers] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [filter, setFilter] = useState('active');
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchMembers = async () => {
+            try {
+                const response = await api.get('/instructor/members');
+                setMembers(response.data);
+                setLoading(false);
+            } catch (err) {
+                console.log(err);
+                
+                setError('회원 목록을 불러오는 데 실패했습니다.');
+                setLoading(false);
+            }
+        };
+
+        fetchMembers();
+    }, []);
 
     const handleGoBack = () => {
         navigate('/instructor/dashboard');
     };
 
     const handleMemberClick = (memberId) => {
-        // 🚨 회원의 상세 정보 페이지로 이동 (진척도, 레슨 노트 등)
         navigate(`/instructor/members/${memberId}`);
     };
 
@@ -28,6 +40,26 @@ const InstructorMembers = () => {
         if (count <= 3) return styles.lowCount;
         return styles.sufficientCount;
     };
+
+    if (loading) {
+        return <div className={styles.container}>로딩 중...</div>;
+    }
+
+    if (error) {
+        return <div className={styles.container}>{error}</div>;
+    }
+
+    const filteredMembers = members
+        .filter(member => {
+            if (filter === 'active') return member.status === '활동중';
+            if (filter === 'inactive') return member.status !== '활동중';
+            if (filter === 'low_lesson') return member.lessonsLeft <= 3;
+            return true;
+        })
+        .filter(member => 
+            member.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            member.phone.includes(searchTerm)
+        );
 
     return (
         <div className={styles.container}>
@@ -50,8 +82,11 @@ const InstructorMembers = () => {
                         type="text" 
                         placeholder="이름 또는 전화번호로 검색" 
                         className={`${styles.searchField} flex-grow`}
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
                     />
-                    <select className={styles.selectField}>
+                    <select className={styles.selectField} value={filter} onChange={(e) => setFilter(e.target.value)}>
+                        <option value="all">전체 회원</option>
                         <option value="active">활동중인 회원</option>
                         <option value="inactive">휴면/종료 회원</option>
                         <option value="low_lesson">잔여 횟수 3회 이하</option>
@@ -71,7 +106,7 @@ const InstructorMembers = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {mockMembers.map((member) => (
+                        {filteredMembers.map((member) => (
                             <tr 
                                 key={member.id} 
                                 className={styles.tableRow}

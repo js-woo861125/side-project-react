@@ -1,51 +1,62 @@
-// src/pages/InstructorMemberDetail.jsx
-
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import styles from '../styles/InstructorMemberDetail.module.css';
+import api from '../services/api';
 
-// 💥 더미 데이터 (실제로는 API에서 Fetch)
-const mockMemberData = {
-    105: {
-        id: 105,
-        name: '홍길동',
-        phone: '010-1234-5678',
-        startDate: '2025-08-01',
-        lessonsTotal: 20,
-        lessonsLeft: 1,
-        specialNotes: '허리디스크 이력으로 특정 동작 제한. 재계약 20회 옵션 안내 필요.',
-        history: [
-            { date: '2025-11-30', type: 'PT', duration: '60분', progress: '데드리프트 자세 개선', attendance: '출석' },
-            { date: '2025-11-28', type: 'PT', duration: '60분', progress: '웜업 루틴, 스쿼트 진행', attendance: '출석' },
-            { date: '2025-11-20', type: 'PT', duration: '60분', progress: '숄더프레스 무게 증량', attendance: '출석' },
-        ],
-    },
-    // ... 다른 회원 데이터 ...
-};
 
 const InstructorMemberDetail = () => {
     const { id } = useParams(); // URL에서 회원 ID 가져오기
     const navigate = useNavigate();
     
-    // 💥 더미 데이터 로딩 (실제는 useEffect에서 API 호출)
-    const member = mockMemberData[id] || { name: '회원 없음', lessonsLeft: '?' };
-    
-    const [notes, setNotes] = useState(member.specialNotes || '');
+    const [member, setMember] = useState(null);
+    const [notes, setNotes] = useState('');
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        // ID가 변경될 때마다 회원 데이터를 로드하는 로직 (API 호출 Placeholder)
-        // setNotes(member.specialNotes); // 실제 데이터 로드 후 메모 업데이트
+        const fetchMemberData = async () => {
+            try {
+                const response = await api.get(`/instructor/members/${id}`);
+                setMember(response.data);
+                setNotes(response.data.specialNotes || '');
+                setLoading(false);
+            } catch (err) {
+                console.log(err);
+                
+                setError('회원 정보를 불러오는 데 실패했습니다.');
+                setLoading(false);
+            }
+        };
+
+        fetchMemberData();
     }, [id]);
 
-    const handleSaveNotes = () => {
-        // 🚨 서버에 메모를 저장하는 API 호출 Placeholder
-        alert(`✅ ${member.name} 회원 메모가 저장되었습니다:\n${notes}`);
-        // 이후 서버 응답에 따라 UI 업데이트
+    const handleSaveNotes = async () => {
+        try {
+            await api.put(`/instructor/members/${id}/notes`, { notes });
+            alert(`✅ ${member.name} 회원 메모가 저장되었습니다.`);
+        } catch (err) {
+            console.log(err);
+            
+            alert('🚨 메모 저장에 실패했습니다.');
+        }
     };
     
     const handleGoBack = () => {
         navigate('/instructor/members');
     };
+
+    if (loading) {
+        return <div className={styles.container}>로딩 중...</div>;
+    }
+
+    if (error) {
+        return <div className={styles.container}>{error}</div>;
+    }
+
+    if (!member) {
+        return <div className={styles.container}>회원 정보를 찾을 수 없습니다.</div>;
+    }
 
     return (
         <div className={styles.container}>

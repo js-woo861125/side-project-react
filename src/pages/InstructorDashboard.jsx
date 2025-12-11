@@ -1,19 +1,42 @@
 // src/pages/InstructorDashboard.jsx (수정)
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import StatusCard from '../components/StatusCard'; 
+import api from '../services/api';
 // 💥 CSS 모듈 임포트
 import styles from '../styles/InstructorDashboard.module.css';
 
-const mockInstructorMetrics = [
-    { title: '오늘 예정된 레슨', value: 3, unit: '건', color: 'blue' },
-    { title: '금월 레슨 완료 횟수', value: 25, unit: '회', color: 'green' },
-    { title: '담당 활동 회원 수', value: 18, unit: '명', color: 'red' },
-    { title: '다음 주 평균 예약률', value: 85, unit: '%', color: 'yellow' },
-];
-
 const InstructorDashboard = () => {
+    const [instructorMetrics, setInstructorMetrics] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchMetrics = async () => {
+            try {
+                const response = await api.get('/instructor/metrics');
+                setInstructorMetrics(response.data);
+                setLoading(false);
+            } catch (err) {
+                console.log(err);
+                
+                setError('데이터를 불러오는 데 실패했습니다.');
+                setLoading(false);
+            }
+        };
+
+        fetchMetrics();
+    }, []);
+
+    if (loading) {
+        return <div className={styles.container}>로딩 중...</div>;
+    }
+
+    if (error) {
+        return <div className={styles.container}>{error}</div>;
+    }
+
     return (
         // 💥 클래스 적용: container
         <div className={styles.container}> 
@@ -27,7 +50,7 @@ const InstructorDashboard = () => {
 
             {/* 💥💥 StatusCard 적용 및 클래스 적용: metricsGrid */}
             <div className={styles.metricsGrid}>
-                {mockInstructorMetrics.map((metric, index) => (
+                {instructorMetrics.map((metric, index) => (
                     <StatusCard 
                         key={index}
                         title={metric.title}

@@ -1,29 +1,44 @@
-// src/pages/ProgressReport.jsx
-
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from '../styles/ProgressReport.module.css';
-
-// 더미 데이터: 핵심 성과 지표 (Key Performance Indicators)
-const mockMetrics = [
-    { title: '누적 완료 레슨', value: 12, unit: '회', style: 'blue' },
-    { title: '목표 달성률', value: 75, unit: '%', style: 'green' },
-    { title: '주요 체중 변화', value: -4.5, unit: 'kg', style: 'purple' },
-];
-
-// 더미 데이터: 강사 종합 피드백
-const mockFeedback = {
-    date: '2025. 11. 27',
-    summary: "OOO 회원님, 지난 4주간 꾸준한 출석과 집중력 덕분에 **데드리프트 자세가 완벽하게 교정**되었고, 목표 체중의 절반을 달성했습니다. 특히, 식단 관리와 유산소 운동 병행이 큰 효과를 보고 있습니다. 다음 4주 목표는 상체 근력 증가와 코어 강화에 집중하겠습니다.",
-    nextGoal: "주 3회 출석 유지, 푸시업 5회 연속 성공 목표 설정",
-};
+import api from '../services/api';
 
 const ProgressReport = () => {
     const navigate = useNavigate();
+    const [metrics, setMetrics] = useState([]);
+    const [feedback, setFeedback] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchProgressReport = async () => {
+            try {
+                const response = await api.get('/student/progress-report');
+                setMetrics(response.data.metrics);
+                setFeedback(response.data.feedback);
+                setLoading(false);
+            } catch (err) {
+                console.log(err);
+                
+                setError('진행 상황 리포트를 불러오는 데 실패했습니다.');
+                setLoading(false);
+            }
+        };
+
+        fetchProgressReport();
+    }, []);
 
     const handleGoBack = () => {
         navigate('/student/dashboard');
     };
+
+    if (loading) {
+        return <div className={styles.container}>로딩 중...</div>;
+    }
+
+    if (error) {
+        return <div className={styles.container}>{error}</div>;
+    }
 
     return (
         <div className={styles.container}>
@@ -43,7 +58,7 @@ const ProgressReport = () => {
                 
                 {/* 1. 핵심 지표 카드 */}
                 <div className={styles.metricGrid}>
-                    {mockMetrics.map((metric, index) => (
+                    {metrics.map((metric, index) => (
                         <div key={index} className={`${styles.metricCard} ${styles[metric.style]}`}>
                             <p className={styles.metricTitle}>{metric.title}</p>
                             <p className={styles.metricValue}>
@@ -67,16 +82,18 @@ const ProgressReport = () => {
                 </div>
 
                 {/* 3. 강사 종합 피드백 */}
-                <div className={styles.feedbackSection}>
-                    <h2 className="text-xl font-semibold text-blue-700 mb-3">🏅 강사 종합 피드백 (업데이트: {mockFeedback.date})</h2>
-                    <p className="text-gray-800 leading-relaxed">
-                        {mockFeedback.summary}
-                    </p>
-                    <div className="mt-4 p-3 bg-blue-100 rounded-md">
-                        <p className="text-sm font-bold text-blue-800">👉 다음 목표:</p>
-                        <p className="text-base text-blue-800 mt-1">{mockFeedback.nextGoal}</p>
+                {feedback && (
+                    <div className={styles.feedbackSection}>
+                        <h2 className="text-xl font-semibold text-blue-700 mb-3">🏅 강사 종합 피드백 (업데이트: {feedback.date})</h2>
+                        <p className="text-gray-800 leading-relaxed">
+                            {feedback.summary}
+                        </p>
+                        <div className="mt-4 p-3 bg-blue-100 rounded-md">
+                            <p className="text-sm font-bold text-blue-800">👉 다음 목표:</p>
+                            <p className="text-base text-blue-800 mt-1">{feedback.nextGoal}</p>
+                        </div>
                     </div>
-                </div>
+                )}
 
             </div>
         </div>

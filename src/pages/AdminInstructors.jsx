@@ -1,21 +1,31 @@
-// src/pages/AdminInstructors.jsx
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from '../styles/AdminInstructors.module.css';
-
-// 더미 강사 데이터
-const mockInstructors = [
-    { id: 1, name: '김철수', specialty: '필라테스', phone: '010-1111-2222', lessonsMonth: 45, status: 'Active', hireDate: '2023.01.15' },
-    { id: 2, name: '이지은', specialty: 'PT/재활', phone: '010-3333-4444', lessonsMonth: 32, status: 'Active', hireDate: '2024.05.20' },
-    { id: 3, name: '박서준', specialty: '요가', phone: '010-5555-6666', lessonsMonth: 0, status: 'Inactive', hireDate: '2024.08.01' },
-    { id: 4, name: '최현우', specialty: 'PT', phone: '010-7777-8888', lessonsMonth: 58, status: 'Active', hireDate: '2022.11.01' },
-];
+import api from '../services/api';
 
 const AdminInstructors = () => {
     const navigate = useNavigate();
-    const [instructors, setInstructors] = useState(mockInstructors);
+    const [instructors, setInstructors] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchInstructors = async () => {
+            try {
+                const response = await api.get('/admin/instructors');
+                setInstructors(response.data);
+                setLoading(false);
+            } catch (err) {
+                console.log(err);
+                
+                setError('강사 목록을 불러오는 데 실패했습니다.');
+                setLoading(false);
+            }
+        };
+
+        fetchInstructors();
+    }, []);
 
     const handleGoBack = () => {
         navigate('/admin/dashboard');
@@ -31,13 +41,27 @@ const AdminInstructors = () => {
         // 실제로는 강사 정보 수정 페이지로 이동
     };
 
-    const handleDeleteInstructor = (id) => {
+    const handleDeleteInstructor = async (id) => {
         if (window.confirm(`ID ${id} 강사를 정말로 삭제(혹은 비활성화)하시겠습니까?`)) {
-            // 🚨 실제 API 호출 및 상태 업데이트 로직
-            setInstructors(instructors.filter(inst => inst.id !== id));
-            alert('강사 삭제 완료.');
+            try {
+                await api.delete(`/admin/instructors/${id}`);
+                setInstructors(instructors.filter(inst => inst.id !== id));
+                alert('강사 삭제 완료.');
+            } catch (err) {
+                console.log(err);
+                
+                alert('강사 삭제에 실패했습니다.');
+            }
         }
     };
+
+    if (loading) {
+        return <div className={styles.container}>로딩 중...</div>;
+    }
+
+    if (error) {
+        return <div className={styles.container}>{error}</div>;
+    }
 
     const filteredInstructors = instructors.filter(instructor => 
         instructor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||

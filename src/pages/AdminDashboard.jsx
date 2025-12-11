@@ -3,12 +3,14 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import StatusCard from '../components/StatusCard';
 import styles from '../styles/AdminDashboard.module.css';
+import { useGlobal } from '../services/Store';
 
 const AdminDashboard = () => {
     const [metrics, setMetrics] = useState([]);
     const [issues, setIssues] = useState([]);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
+    const username = useGlobal((state) => state.username); // Get username from Zustand
 
     useEffect(() => {
         loadDashboard();
@@ -16,7 +18,7 @@ const AdminDashboard = () => {
 
     const loadDashboard = async () => {
         try {
-            const res = await fetch("http://localhost:8000/api/v1/admin/dashboard", {
+            const res = await fetch("http://localhost:8000/admin/dashboard", {
                 method: "GET",
                 credentials: "include", // ⭐ 세션 쿠키 포함
             });
@@ -28,10 +30,12 @@ const AdminDashboard = () => {
             }
 
             const data = await res.json();
+            console.log("대시보드 응답:", data);  
+
             setMetrics(data.metrics);
             setIssues(data.issues);
             setLoading(false);
-
+            
         } catch (error) {
             console.error("대시보드 로딩 오류:", error);
             navigate("/login");
@@ -44,7 +48,7 @@ const AdminDashboard = () => {
         <div className={styles.container}>
             <header className={styles.header}>
                 <h1 className={styles.greeting}>
-                    👋 관리자님 안녕하세요!
+                    👋 {username} 관리자님 안녕하세요!
                 </h1>
                 <p className={styles.subtitle}>기관 전체 운영 현황을 확인하세요.</p>
             </header>

@@ -1,22 +1,31 @@
-// src/pages/AdminMembers.jsx
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from '../styles/AdminMembers.module.css';
-
-// 더미 전체 회원 데이터
-const mockMembers = [
-    { id: 101, name: '이민지', instructor: '김철수', lessonsTotal: 20, lessonsLeft: 3, status: 'Active', purchaseDate: '2025.10.01' },
-    { id: 102, name: '김태형', instructor: '이지은', lessonsTotal: 10, lessonsLeft: 12, status: 'Active', purchaseDate: '2025.11.20' },
-    { id: 103, name: '박서준', instructor: '없음', lessonsTotal: 10, lessonsLeft: 0, status: 'Inactive', purchaseDate: '2025.08.01' },
-    { id: 104, name: '최아라', instructor: '김철수', lessonsTotal: 30, lessonsLeft: 7, status: 'Active', purchaseDate: '2025.09.15' },
-    { id: 105, name: '홍길동', instructor: '이지은', lessonsTotal: 5, lessonsLeft: 1, status: 'Active', purchaseDate: '2025.11.28' },
-];
+import api from '../services/api';
 
 const AdminMembers = () => {
     const navigate = useNavigate();
-    const [members, setMembers] = useState(mockMembers);
+    const [members, setMembers] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchMembers = async () => {
+            try {
+                const response = await api.get('/admin/members');
+                setMembers(response.data);
+                setLoading(false);
+            } catch (err) {
+                console.log(err);
+                
+                setError('회원 목록을 불러오는 데 실패했습니다.');
+                setLoading(false);
+            }
+        };
+
+        fetchMembers();
+    }, []);
 
     const handleGoBack = () => {
         navigate('/admin/dashboard');
@@ -27,10 +36,16 @@ const AdminMembers = () => {
     };
 
     const handleMemberClick = (memberId) => {
-        // 🚨 회원의 상세 관리 페이지로 이동 (레슨 패키지 수정, 출결 관리 등)
-        alert(`🚨 ID ${memberId} 회원 상세 정보 관리 페이지로 이동`);
-        // navigate(`/admin/members/${memberId}`);
+        navigate(`/admin/members/${memberId}`);
     };
+
+    if (loading) {
+        return <div className={styles.container}>로딩 중...</div>;
+    }
+
+    if (error) {
+        return <div className={styles.container}>{error}</div>;
+    }
 
     const getLessonCountStyle = (count) => {
         if (count <= 3) return styles.lowCount;
@@ -39,7 +54,7 @@ const AdminMembers = () => {
 
     const filteredMembers = members.filter(member => 
         member.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        member.instructor.toLowerCase().includes(searchTerm.toLowerCase())
+        (member.instructor && member.instructor.toLowerCase().includes(searchTerm.toLowerCase()))
     );
 
     return (
@@ -97,7 +112,7 @@ const AdminMembers = () => {
                                 >
                                     <td>{member.id}</td>
                                     <td className="font-semibold">{member.name}</td>
-                                    <td>{member.instructor}</td>
+                                    <td>{member.instructor || '없음'}</td>
                                     <td className="hidden sm:table-cell">{member.lessonsTotal}회</td>
                                     <td className={`${styles.lessonsLeft} ${getLessonCountStyle(member.lessonsLeft)}`}>
                                         {member.lessonsLeft}회

@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import { loginUser } from '../services/authService';
 import '../styles/login.css'; 
 import api from '../services/api';
+import { useGlobal } from '../services/Store';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const setUsername = useGlobal((state) => state.setUsername);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -21,6 +22,7 @@ function Login() {
       const response = await api.post('/login', { email, password });
       const user = response.data;
       if (user?.role) {
+        setUsername(user.username); // Store username in Zustand
         if (user.role === 'admin') navigate('/admin/dashboard');
         else if (user.role === 'teacher') navigate('/instructor/dashboard');
         else navigate('/student/dashboard');

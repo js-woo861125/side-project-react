@@ -1,30 +1,54 @@
-// src/pages/InstructorProgress.jsx
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from '../styles/InstructorProgress.module.css';
-
-// 더미 데이터
-const mockMembers = [
-    { id: 101, name: '이민지' },
-    { id: 102, name: '김태형' },
-    { id: 104, name: '최아라' },
-];
-
-const mockNotes = [
-    { id: 1, memberId: 101, date: '2025.11.27', title: '코어 강화 및 자세 교정 5회차', evaluation: '코어 힘이 많이 증가했으나, 좌우 불균형이 여전히 존재함. 특히 힙 힌지(Hip Hinge) 시 오른쪽 무릎이 안으로 돌아가는 경향이 있어 다음 레슨에서 집중 교정 필요. 숙제: 버드독 3세트.' },
-    { id: 2, memberId: 101, date: '2025.11.20', title: '첫 번째 레슨: 기본 체형 분석 및 호흡법', evaluation: '흉곽 호흡이 약하고 목이 앞으로 빠지는 자세 습관 확인. 기본적인 호흡 인지 훈련과 함께 숄더 패킹 연습 진행. 만족도 높음.' },
-    { id: 3, memberId: 102, date: '2025.11.25', title: '웨이트: 벤치 프레스 자세 교정', evaluation: '어깨 전방 활주 방지를 위해 흉곽을 고정하는 법 집중 교육. 무게 욕심보다는 정확한 자세를 강조함. 다음 레슨부터는 중량 훈련을 서서히 시작할 예정.' },
-];
-
+import api from '../services/api';
 
 const InstructorProgress = () => {
     const navigate = useNavigate();
-    // 💥 현재 선택된 회원 ID 상태
-    const [selectedMemberId, setSelectedMemberId] = useState(mockMembers[0].id); 
-    // 💥 노트 모달 상태 (실제 구현 시 사용)
+    const [members, setMembers] = useState([]);
+    const [notes, setNotes] = useState([]);
+    const [selectedMemberId, setSelectedMemberId] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [noteDetail, setNoteDetail] = useState(null); // 모달에 보여줄 노트 내용
+    const [noteDetail, setNoteDetail] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchMembers = async () => {
+            try {
+                const response = await api.get('/instructor/members');
+                setMembers(response.data);
+                if (response.data.length > 0) {
+                    setSelectedMemberId(response.data[0].id);
+                }
+                setLoading(false);
+            } catch (err) {
+                console.log(err);
+                
+                setError('회원 목록을 불러오는 데 실패했습니다.');
+                setLoading(false);
+            }
+        };
+
+        fetchMembers();
+    }, []);
+
+    useEffect(() => {
+        if (selectedMemberId) {
+            const fetchNotes = async () => {
+                try {
+                    const response = await api.get(`/instructor/members/${selectedMemberId}/notes`);
+                    setNotes(response.data);
+                } catch (err) {
+                    console.log(err);
+                    
+                    setNotes([]);
+                }
+            };
+
+            fetchNotes();
+        }
+    }, [selectedMemberId]);
 
     const handleGoBack = () => {
         navigate('/instructor/dashboard');
@@ -44,10 +68,33 @@ const InstructorProgress = () => {
         setIsModalOpen(true);
     };
 
-    // 선택된 회원의 노트만 필터링
-    const filteredNotes = mockNotes.filter(note => note.memberId === selectedMemberId);
-    // 최신 노트가 위에 오도록 정렬
-    filteredNotes.sort((a, b) => new Date(b.date) - new Date(a.date));
+    const handleSaveNote = async (noteToSave) => {
+        try {
+            if (noteToSave.id) {
+                await api.put(`/instructor/notes/${noteToSave.id}`, noteToSave);
+            } else {
+                await api.post(`/instructor/members/${selectedMemberId}/notes`, noteToSave);
+            }
+            setIsModalOpen(false);
+            // Refresh notes
+            const response = await api.get(`/instructor/members/${selectedMemberId}/notes`);
+            setNotes(response.data);
+        } catch (err) {
+            console.log(err);
+            
+            alert('노트 저장에 실패했습니다.');
+        }
+    };
+
+    if (loading) {
+        return <div className={styles.container}>로딩 중...</div>;
+    }
+
+    if (error) {
+        return <div className={styles.container}>{error}</div>;
+    }
+    
+    const filteredNotes = notes.sort((a, b) => new Date(b.date) - new Date(a.date));
 
     return (
         <div className={styles.container}>
@@ -71,7 +118,7 @@ const InstructorProgress = () => {
                         value={selectedMemberId}
                         onChange={(e) => setSelectedMemberId(parseInt(e.target.value))}
                     >
-                        {mockMembers.map(member => (
+                        {members.map(member => (
                             <option key={member.id} value={member.id}>{member.name} 회원</option>
                         ))}
                     </select>
@@ -85,7 +132,7 @@ const InstructorProgress = () => {
 
                 {/* 2. 레슨 기록 목록 */}
                 <h2 className="text-xl font-semibold text-gray-700 mb-3">
-                    {mockMembers.find(m => m.id === selectedMemberId)?.name} 회원의 레슨 기록 ({filteredNotes.length}건)
+                    {members.find(m => m.id === selectedMemberId)?.name} 회원의 레슨 기록 ({filteredNotes.length}건)
                 </h2>
 
                 <div className={styles.noteList}>
@@ -107,13 +154,13 @@ const InstructorProgress = () => {
                 </div>
             </div>
 
-            {/* 🚨 실제로는 여기에 레슨 노트 작성/보기 Modal 컴포넌트가 들어갑니다. */}
             {isModalOpen && noteDetail && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
                     <div className="bg-white p-6 rounded-lg shadow-2xl w-full max-w-lg">
                         <h3 className="text-2xl font-bold mb-4">{noteDetail.id ? '레슨 노트 상세 보기/수정' : '새 레슨 노트 작성'}</h3>
-                        <p className="mb-2">**회원:** {mockMembers.find(m => m.id === noteDetail.memberId)?.name}</p>
-                        <p className="mb-4">**날짜:** {noteDetail.date}</p>
+                        <p className="mb-2">**회원:** {members.find(m => m.id === noteDetail.memberId)?.name}</p>
+                        <p className="mb-4">**날짜:** <input type="text" defaultValue={noteDetail.date} className="border p-1" /></p>
+                        <input type="text" placeholder="제목" defaultValue={noteDetail.title} className="w-full p-2 border rounded-md mb-2" />
                         <textarea 
                             className="w-full h-40 p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
                             defaultValue={noteDetail.evaluation} 
@@ -128,7 +175,7 @@ const InstructorProgress = () => {
                             </button>
                             <button 
                                 className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-                                onClick={() => { alert('노트 저장 완료 (실제 저장 로직 필요)'); setIsModalOpen(false); }}
+                                onClick={() => handleSaveNote(noteDetail)}
                             >
                                 {noteDetail.id ? '수정 및 저장' : '작성 완료'}
                             </button>
