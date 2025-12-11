@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from './AdminInstructors.module.css';
+import styles from '../styles/AdminInstructors.module.css';
 
 // 더미 강사 데이터
 const mockInstructors = [

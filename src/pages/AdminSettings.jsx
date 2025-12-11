@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from './AdminSettings.module.css';
+import styles from '../styles/AdminSettings.module.css';
 
 const AdminSettings = () => {
     const navigate = useNavigate();

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from './LessonHistory.module.css';
+import styles from '../styles/LessonHistory.module.css';
 
 // 더미 데이터: 실제로는 API에서 불러와야 합니다.
 const lessonData = [

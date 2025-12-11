@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from './AdminMembers.module.css';
+import styles from '../styles/AdminMembers.module.css';
 
 // 더미 전체 회원 데이터
 const mockMembers = [

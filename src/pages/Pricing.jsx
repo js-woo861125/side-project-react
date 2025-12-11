@@ -1,7 +1,7 @@
 // 요금안내 페이지
 import React from 'react';
 import { Link } from 'react-router-dom';
-import styles from './Pricing.module.css';
+import styles from '../styles/Pricing.module.css';
 
 // 종량제 가격 데이터 (최종)
 const pricingData = {

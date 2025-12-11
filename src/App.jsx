@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, BrowserRouter } from 'react-router-dom';
 import HeroSection from './components/HeroSection'; 
 import Login from './components/Login'; 
 import InstructorDashboard from './pages/InstructorDashboard'; 
@@ -38,7 +38,7 @@ function App() {
   return (
     // 전역 스타일 및 모바일 잘림 방지 (App.jsx에서 관리)
     <div className="w-full min-h-screen overflow-x-hidden">
-      <Router>
+      <BrowserRouter>
         <Routes>
           
           {/* 공개 라우트 */}
@@ -104,7 +104,7 @@ function App() {
           <Route path="*" element={<h1>404: 페이지를 찾을 수 없습니다.</h1>} />
 
         </Routes>
-      </Router>
+      </BrowserRouter>
     </div>
   );
 }

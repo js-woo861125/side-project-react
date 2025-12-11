@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from './InstructorSchedule.module.css';
+import styles from '../styles/InstructorSchedule.module.css';
 
 // 캘린더 날짜/요일 관련 더미 데이터 (주간 뷰 기준)
 const weekDays = ['일', '월', '화', '수', '목', '금', '토'];

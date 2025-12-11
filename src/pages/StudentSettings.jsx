@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from './StudentSettings.module.css';
+import styles from '../styles/StudentSettings.module.css';
 
 const StudentSettings = () => {
     const navigate = useNavigate();

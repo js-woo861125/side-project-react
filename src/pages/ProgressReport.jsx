@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from './ProgressReport.module.css';
+import styles from '../styles/ProgressReport.module.css';
 
 // 더미 데이터: 핵심 성과 지표 (Key Performance Indicators)
 const mockMetrics = [

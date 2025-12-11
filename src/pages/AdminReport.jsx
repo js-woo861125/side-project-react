@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from './AdminReport.module.css';
+import styles from '../styles/AdminReport.module.css';
 
 // 더미 데이터: 재무 요약
 // const mockSummary = [

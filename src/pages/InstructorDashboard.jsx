@@ -4,7 +4,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import StatusCard from '../components/StatusCard'; 
 // 💥 CSS 모듈 임포트
-import styles from './InstructorDashboard.module.css';
+import styles from '../styles/InstructorDashboard.module.css';
 
 const mockInstructorMetrics = [
     { title: '오늘 예정된 레슨', value: 3, unit: '건', color: 'blue' },

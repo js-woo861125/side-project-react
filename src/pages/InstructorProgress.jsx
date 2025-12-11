@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from './InstructorProgress.module.css';
+import styles from '../styles/InstructorProgress.module.css';
 
 // 더미 데이터
 const mockMembers = [

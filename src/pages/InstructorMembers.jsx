@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from './InstructorMembers.module.css';
+import styles from '../styles/InstructorMembers.module.css';
 
 // 더미 데이터: 강사 담당 회원 목록
 const mockMembers = [

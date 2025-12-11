@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Sidebar from '../components/layout/Sidebar'; 
 // 💥 InstructorDashboard의 레이아웃 스타일 재사용
-import styles from './InstructorDashboard.module.css'; 
+import styles from '../styles/InstructorDashboard.module.css'; 
 
 // 🚨 임시 데이터
 const initialClasses = [

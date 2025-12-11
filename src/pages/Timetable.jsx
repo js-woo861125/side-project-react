@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from './Timetable.module.css';
+import styles from '../styles/Timetable.module.css';
 
 // 주간 요일 목록
 const daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];

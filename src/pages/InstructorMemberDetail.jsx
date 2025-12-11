@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import styles from './InstructorMemberDetail.module.css';
+import styles from '../styles/InstructorMemberDetail.module.css';
 
 // 💥 더미 데이터 (실제로는 API에서 Fetch)
 const mockMemberData = {

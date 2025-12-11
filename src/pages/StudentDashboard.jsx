@@ -3,7 +3,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 // 💥 CSS 모듈 임포트
-import styles from './StudentDashboard.module.css';
+import styles from '../styles/StudentDashboard.module.css';
 
 const StudentDashboard = () => {
     return (

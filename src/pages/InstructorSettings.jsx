@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from './InstructorSettings.module.css';
+import styles from '../styles/InstructorSettings.module.css';
 
 const InstructorSettings = () => {
     const navigate = useNavigate();
