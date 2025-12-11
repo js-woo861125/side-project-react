@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { loginUser } from '../services/authService';
+// import { loginUser } from '../services/authService';
 import '../styles/login.css'; 
-
+import api from '../services/api';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -18,7 +18,8 @@ function Login() {
       return;
     }
     try {
-      const user = await loginUser(email, password);
+      const response = await api.post('/login', { email, password });
+      const user = response.data;
       if (user?.role) {
         if (user.role === 'admin') navigate('/admin/dashboard');
         else if (user.role === 'teacher') navigate('/instructor/dashboard');

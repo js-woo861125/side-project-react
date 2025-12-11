@@ -1,7 +1,6 @@
 // src/pages/Classes.jsx
 
 import React, { useState } from 'react';
-import Sidebar from '../components/layout/Sidebar'; 
 // 💥 InstructorDashboard의 레이아웃 스타일 재사용
 import styles from '../styles/InstructorDashboard.module.css'; 
 
@@ -34,7 +33,6 @@ const Classes = () => {
     return (
         // 💥 styles.mainLayout 적용
         <div className={styles.mainLayout}>
-            <Sidebar role="instructor" />
             
             {/* 💥 styles.contentArea 적용 */}
             <main className={styles.contentArea}>
